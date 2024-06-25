@@ -5,6 +5,8 @@ from django.shortcuts import redirect, render
 from .layers.services import services_nasa_image_gallery
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from nasa_image_gallery.models import Favourite
+from django.contrib import messages
 
 # función que invoca al template del índice de la aplicación.
 def index_page(request):
@@ -44,14 +46,35 @@ def getAllFavouritesByUser(request):
 
 @login_required
 def saveFavourite(request):
-    pass
+    ##pass
+    if request.method == 'POST':
+        try:
+            saved_favourite = services_nasa_image_gallery.saveFavourite(request)
+            if saved_favourite:
+                return redirect('favoritos')  # Redirige a la vista de favoritos si el favorito se guarda correctamente
+            else:
+                messages.error(request, 'Error al guardar el favorito.')
+        except Exception as e:
+            messages.error(request, f'Error: {str(e)}')
 
+        return redirect('home')
 
 @login_required
 def deleteFavourite(request):
-    pass
+    ##pass
+    if request.method == "POST":
+        success = services_nasa_image_gallery.deleteFavourite(request)
+        if success: 
+            return redirect('favoritos')  # Redirigir a la lista de favoritos después de la eliminación exitosa
+        else:
+            messages.error(request, 'Error al guardar el favorito.')
+            return redirect('favoritos')  # Aquí redirigimos de todos modos, puedes personalizar esto.
+    else:
+        return redirect('favoritos')
 
 
 @login_required
 def exit(request):
-    pass
+    ##pass
+    logout(request)
+    return redirect('home.html')
