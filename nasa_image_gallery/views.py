@@ -11,9 +11,11 @@ def index_page(request):
     return render(request, 'index.html')
 
 # auxiliar: retorna 2 listados -> uno de las imágenes de la API y otro de los favoritos del usuario.
-def getAllImagesAndFavouriteList(request):
-    images = []
+def getAllFavouritesByUser(request):
     favourite_list = []
+    images = services_nasa_image_gallery.getAllImages()
+    favourite_list =services_nasa_image_gallery.getAllFavouritesByUser(request)
+    return render(request, 'favourites.html', {'favourite_list': favourite_list})
 
     return images, favourite_list
 
