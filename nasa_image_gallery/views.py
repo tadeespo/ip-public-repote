@@ -17,6 +17,10 @@ def getAllImagesAndFavouriteList(request):
     images = []
     favourite_list = []
 
+    ##
+    images = services_nasa_image_gallery.getAllImages()
+    favourite_list =services_nasa_image_gallery.getAllFavouritesByUser(request)
+
     return images, favourite_list
 
 # función principal de la galería.
@@ -25,6 +29,12 @@ def home(request):
     # (*) este último, solo si se desarrolló el opcional de favoritos; caso contrario, será un listado vacío [].
     images = []
     favourite_list = []
+
+##
+    images = services_nasa_image_gallery.getAllImages()
+## se considera para la lista de favoritos
+    favourite_list =services_nasa_image_gallery.getAllFavouritesByUser(request)
+
     return render(request, 'home.html', {'images': images, 'favourite_list': favourite_list} )
 
 
@@ -40,7 +50,8 @@ def search(request):
 # las siguientes funciones se utilizan para implementar la sección de favoritos: traer los favoritos de un usuario, guardarlos, eliminarlos y desloguearse de la app.
 @login_required
 def getAllFavouritesByUser(request):
-    favourite_list = []
+    ##
+    favourite_list = Favourite.objects.filter(user=request.user)
     return render(request, 'favourites.html', {'favourite_list': favourite_list})
 
 
