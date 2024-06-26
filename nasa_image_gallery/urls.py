@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from . import views
+from nasa_image_gallery.views import exit
 
 urlpatterns = [
     path('', views.index_page, name='index-page'),

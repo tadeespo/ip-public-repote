@@ -1,6 +1,6 @@
 # Introducción a la Programación - primer semestre del 2024.
 ## Trabajo práctico: galería de imágenes de la NASA 🚀
-
+tadeo
 
 ![Galería de Imágenes de la NASA](https://api.nasa.gov/assets/img/general/apod.jpg)
 
